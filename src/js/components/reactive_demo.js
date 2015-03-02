@@ -31,11 +31,8 @@ function toggleButton() {
     this.after('toggle', this.batchify('update'));
 
     this.on(document, 'changeShips', function(e, data) {
-      console.log('changeShips', +new Date());
-      console.log(data.ships, +new Date());
-      console.log(data.current, +new Date());
+      console.log(data);
     });
-
 
     // Subscribe to a stream of the changing state
     this.observableState.subscribe(this.update.bind(this));

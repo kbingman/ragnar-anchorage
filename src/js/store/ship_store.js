@@ -16,16 +16,12 @@ function ShipStore() {
     this.attr.ships = data.starships.map(function(ship) {
       return this.calculate(ship);;
     }, this);
-
-    this.trigger('changeShips', this.attr);
   };
 
   this.setCurrentShip = function(e, id) {
     this.attr.current =  this.attr.ships.filter(function(ship) {
       return ship.id == id;
     })[0];
-
-    this.trigger('changeShips', this.attr);
   };
 
   this.removeShip = function(e, id) {
@@ -35,12 +31,22 @@ function ShipStore() {
       }
       return memo;
     }, []);
-    if (this.current && this.current.id == id) {
-      this.current = undefined;
-    }
 
-    this.trigger('changeShips', this.attr);
+    if (this.attr.current && this.attr.current.id == id) {
+      this.attr.current = undefined;
+    }
   };
+
+  this.signalChange = function() {
+    this.trigger('changeShips', {
+      ships: this.attr.ships,
+      current: this.attr.current
+    });
+  };
+
+  ['reset', 'setCurrentShip', 'removeShip'].forEach(function(method) {
+    this.after(method, this.signalChange);
+  }, this);
 
   this.after('initialize', function() {
     this.on(document, 'resetShips', this.reset);

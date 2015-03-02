@@ -1,26 +1,21 @@
 var flight = require('flightjs');
-var ShipStore = require('../store/ship_store');
 
 var withBatch = require('flight-with-batch');
 var withXHR = require('../mixin/with_xhr');
 
 function dispatcher() {
   this.attributes({
-    shipStore: new ShipStore()
+    shipStore: null
   });
 
-  this.createStore = function(response) {
-    response.starships.forEach(function(ship) {
-      this.attr.shipStore.add(ship);
-    }, this);
-
-    window.shipStore = this.attr.shipStore;
-  }
+  this.resetStore = function(response) {
+    this.attr.shipStore.reset(response.starships);
+  };
 
   this.fetch = function() {
     this.request({ url: '/api/v1/ships' })
-      .then(this.createStore.bind(this));
-  }
+      .then(this.resetStore.bind(this));
+  };
 
   this.after('initialize', function() {
     this.fetch();

@@ -1,7 +1,7 @@
 var flight = require('flightjs');
 var withObservableState = require('flight-with-observable-state');
 var withBatch = require('flight-with-batch');
-
+var shipStore = require('../store/ship_store');
 
 function toggleButton() {
   this.attributes({
@@ -29,6 +29,11 @@ function toggleButton() {
   this.after('initialize', function() {
     this.on('click', this.toggle);
     this.after('toggle', this.batchify('update'));
+
+    this.on(document, 'changeShips', function() {
+      console.log('changeShips', +new Date());
+      console.log(shipStore.ships.length, +new Date());
+    });
 
 
     // Subscribe to a stream of the changing state

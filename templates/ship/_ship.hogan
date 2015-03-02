@@ -1,0 +1,201 @@
+<form id="createship">
+  {{# ship }}
+    {{# id }}<input name="id" value="{{ id }}" type="hidden" />{{/ id }}
+    {{# uuid }}<input name="uuid" value="{{ uuid }}" type="hidden" />{{/ uuid }}
+    <div class="r-field">
+      <!-- <label for="shipName">Name</label> -->
+      <h2 name="name"
+          id="shipname"
+          contenteditable="true"
+          placeholder="Name">{{ name }}</h2>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <h3 type="text"
+            name="mass"
+            id="shipmass"
+            contenteditable="true"
+            placeholder="mass">
+        {{# round }}{{ mass }}{{/ round }}
+      </h3>
+      <h4>
+        Remaining Tonnage:
+        {{# format }}{{ remaining }}{{/ format }}
+      </h4>
+      <h4>
+        Remaining EP:
+        {{# format }}{{ remainingEP }}{{/ format }}
+      </h4>
+      <h4>
+        Agility: {{ agility }}
+      </h4>
+
+      <p>Price: MCr {{# format }}{{ price }}{{/ format }}</p>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <label for="shipConfiguration">Configuration</label>
+      <select name="configuration" id="shipConfiguration">
+        {{# configurations }}
+          <option {{# selected }}selected {{/ selected }}value="{{ name }}">
+            {{ name }}
+          </option>
+        {{/ configurations }}
+      </select>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <label for="shiparmor">Armor</label>
+      <span name="thrust" data-thrust>{{ armor }}</span>
+      <button data-up="armor">&#8593;</button>
+      <button data-down="armor">&#8595;</button>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <label for="thrust">Thrust</label>
+      <span name="thrust" data-thrust>{{ thrust }}</span>
+      <button data-up="thrust">&#8593;</button>
+      <button data-down="thrust">&#8595;</button>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <label for="ftl">FTL Range</label>
+      <span name="ftl" data-ftl>{{ ftl }}</span>
+      <button data-up="ftl">&#8593;</button>
+      <button data-down="ftl">&#8595;</button>
+      <span class="r-error-message"></span>
+    </div>
+
+    <div class="r-field">
+      <label for="reactor">Reactor</label>
+      <span name="reactor" data-reactor>{{ reactor }}</span>
+      <button data-up="reactor">&#8593;</button>
+      <button data-down="reactor">&#8595;</button>
+      <span class="r-error-message"></span>
+    </div>
+
+    {{# isCapitalShip }}
+      <div class="r-field">
+        Spinal Mounted Primary Weapon:
+        {{# primaryWeapons }}
+          {{ name }} &ndash; {{ count }}
+          <button data-type="primaryWeapons" data-removeweapon="{{ id }}">
+            Remove
+          </button>
+        {{/ primaryWeapons }}
+        {{^ primaryWeapons }}
+          <select data-weapon id="primaryWeapon">
+            <option value="">...</option>
+            {{# availablePrimaryWeapons }}
+              <option value="{{ Id }}">{{ Name }}-{{ mass }}</option>
+            {{/ availablePrimaryWeapons }}
+          </select>
+          <!-- <select id="primaryWeaponType">
+            <option value="">...</option>
+            <option value="a">A</option>
+          </select> -->
+          <button data-addweapon="primaryWeapons" id="addPrimaryButton">Add</button>
+          <span class="r-error-message"></span>
+        {{/ primaryWeapons }}
+      </div>
+    {{/ isCapitalShip }}
+
+    <div class="r-field">
+    {{# batteryWeapons }}
+      <div>
+        Batteries: {{ name }} &ndash; {{ count }}
+        <button data-type="batteryWeapons" data-removeweapon="{{ id }}">
+          Remove
+        </button>
+      </div>
+    {{/ batteryWeapons }}
+    {{# pointDefenseWeapons }}
+      <div>
+        Point Defense Weapons: {{ name }} &ndash; {{ count }}
+        <button data-type="pointDefenseWeapons" data-removeweapon="{{ id }}">
+          Remove
+        </button>
+      </div>
+    {{/ pointDefenseWeapons }}
+    </div>
+  {{/ ship }}
+
+  <div class="r-field">
+    <label for="batteryWeapons">Battery Weapons</label>
+    <select data-weapon id="batteryWeapons">
+      <option value="">...</option>
+      {{# availableBatteryWeapons }}
+      <option value="{{ Id }}">{{ Name }}</option>
+      {{/ availableBatteryWeapons }}
+    </select>
+    <select data-count id="batteryWeaponCount">
+      <option value="">...</option>
+      {{# ship.availBat }}
+      <option value="{{ . }}">{{ . }}</option>
+      {{/ ship.availBat }}
+    </select>
+    <button data-addweapon="batteryWeapons" id="addBattterButton">Add</button>
+    <span class="r-error-message"></span>
+  </div>
+
+  <div class="r-field">
+    <label for="pointDefenseWeapons">Point Defense Weapons</label>
+    <select data-weapon id="pointDefenseWeapons">
+      <option value="">...</option>
+      {{# availablePointDefenseWeapons }}
+      <option value="{{ Id }}">{{ Name }}</option>
+      {{/ availablePointDefenseWeapons }}
+    </select>
+    <select data-count id="pdWeaponCount">
+      <option value="">...</option>
+      {{# ship.availPDW }}
+      <option value="{{ . }}">{{ . }}</option>
+      {{/ ship.availPDW }}
+    </select>
+    <button data-addweapon="pointDefenseWeapons" id="addPointDefenseButton">Add</button>
+    <span class="r-error-message"></span>
+  </div>
+
+  <!-- <div class="r-field">
+    <label for="smallcraft">Small Craft</label>
+    <select id="smallcraft">
+      <option value="">...</option>
+      {{# smallcraft }}
+      <option value="{{ . }}">{{ . }}</option>
+      {{/ smallcraft }}
+    </select>
+    <button data="">Add</button>
+    <span class="r-error-message"></span>
+  </div> -->
+
+  <div class="r-field">
+    <label for="troops">Officers</label>
+    <span name="troops" data-thrust>{{ ship.crew.officers }}</span>
+  </div>
+
+  <div class="r-field">
+    <label for="troops">Ratings</label>
+    <span name="troops" data-thrust>{{ ship.crew.ratings }}</span>
+  </div>
+
+  <div class="r-field">
+    <label for="troops">Troops</label>
+    <span name="troops" data-thrust>{{ ship.troops }}</span>
+    <button data-up="troops">&#8593;</button>
+    <button data-down="troops">&#8595;</button>
+    <span class="r-error-message"></span>
+  </div>
+
+  <div class="r-field">
+    <label for="passengers">Passengers</label>
+    <span name="passengers" data-thrust>{{ ship.passengers }}</span>
+    <button data-up="passengers">&#8593;</button>
+    <button data-down="passengers">&#8595;</button>
+    <span class="r-error-message"></span>
+  </div>
+</form>

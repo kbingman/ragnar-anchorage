@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  color: black;
+  font-size: 100%;
+  font-family: 'Fira Sans', serif; }
+
+h1 {
+  font-weight: 300; }
+
+canvas {
+  background: black; }

@@ -7,6 +7,5 @@ var shipStore = require('./store/ship_store');
 window.shipStore = shipStore;
 
 reactiveDemo.attachTo('[data-button]');
-dispatcher.attachTo(document, {
-  shipStore: shipStore
-});
+shipStore.attachTo(document);
+dispatcher.attachTo(document);

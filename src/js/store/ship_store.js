@@ -5,28 +5,31 @@ var withShipCalculator = require('../mixin/with_ship_calculator');
  * State Object for current ships
  */
 function ShipStore() {
-  flight.compose.mixin(this, [withShipCalculator]);
 
-  this.ships = [];
+  this.attributes({
+    ships: [],
+    current: undefined
+  });
 
-  this.reset = function(ships) {
-    this.ships = ships.map(function(ship) {
+  this.reset = function(e, data) {
+    console.log(data)
+    this.attr.ships = data.starships.map(function(ship) {
       return this.calculate(ship);;
     }, this);
 
-    $(document).trigger('changeShips');
+    this.trigger('changeShips', this.attr);
   };
 
-  this.setCurrentShip = function(id) {
-    this.current = this.ships.filter(function(ship) {
+  this.setCurrentShip = function(e, id) {
+    this.attr.current =  this.attr.ships.filter(function(ship) {
       return ship.id == id;
     })[0];
 
-    $(document).trigger('changeShips');
+    this.trigger('changeShips', this.attr);
   };
 
-  this.removeShip = function(id) {
-    this.ships = this.ships.reduce(function(memo, ship) {
+  this.removeShip = function(e, id) {
+    this.attr.ships = this.attr.ships.reduce(function(memo, ship) {
       if (ship.id != id) {
         memo.push(ship);
       }
@@ -36,9 +39,18 @@ function ShipStore() {
       this.current = undefined;
     }
 
-    $(document).trigger('changeShips');
+    this.trigger('changeShips', this.attr);
   };
+
+  this.after('initialize', function() {
+    this.on(document, 'resetShips', this.reset);
+    this.on(document, 'setCurrentShip', this.setCurrentShip);
+    this.on(document, 'removeShip', this.removeShip);
+  });
 
 }
 
-module.exports = new ShipStore();
+module.exports = flight.component(
+  withShipCalculator,
+  ShipStore
+);

@@ -5,11 +5,11 @@ var withXHR = require('../mixin/with_xhr');
 
 function dispatcher() {
   this.attributes({
-    shipStore: null
+    // shipStore: null
   });
 
   this.resetStore = function(response) {
-    this.attr.shipStore.reset(response.starships);
+    this.trigger(document, 'resetShips', response);
   };
 
   this.fetch = function() {

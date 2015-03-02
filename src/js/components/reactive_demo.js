@@ -30,9 +30,10 @@ function toggleButton() {
     this.on('click', this.toggle);
     this.after('toggle', this.batchify('update'));
 
-    this.on(document, 'changeShips', function() {
+    this.on(document, 'changeShips', function(e, data) {
       console.log('changeShips', +new Date());
-      console.log(shipStore.ships.length, +new Date());
+      console.log(data.ships, +new Date());
+      console.log(data.current, +new Date());
     });
 
 

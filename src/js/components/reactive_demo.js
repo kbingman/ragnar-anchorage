@@ -32,6 +32,7 @@ function toggleButton() {
 
     this.on(document, 'changeShips', function(e, data) {
       console.log(data);
+      console.log(this.state);
     });
 
     // Subscribe to a stream of the changing state

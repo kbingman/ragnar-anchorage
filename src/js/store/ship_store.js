@@ -1,10 +1,17 @@
 var flight = require('flightjs');
 var withShipCalculator = require('../mixin/with_ship_calculator');
+var withObservableState = require('flight-with-observable-state');
+var withBatch = require('flight-with-batch');
 
 /**
  * State Object for current ships
  */
 function ShipStore() {
+
+  this.initialState({
+      ships: [],
+      current: undefined
+  });
 
   this.attributes({
     ships: [],
@@ -12,36 +19,37 @@ function ShipStore() {
   });
 
   this.reset = function(e, data) {
-    console.log(data)
-    this.attr.ships = data.starships.map(function(ship) {
-      return this.calculate(ship);;
-    }, this);
+    this.mergeState({
+      ships: data.starships.map(function(ship) {
+        return this.calculate(ship);;
+      }, this)
+    });
   };
 
   this.setCurrentShip = function(e, id) {
-    this.attr.current =  this.attr.ships.filter(function(ship) {
-      return ship.id == id;
-    })[0];
+    this.mergeState({
+      current: this.state.ships.filter(function(ship) {
+        return ship.id == id;
+      })[0]
+    });
   };
 
   this.removeShip = function(e, id) {
-    this.attr.ships = this.attr.ships.reduce(function(memo, ship) {
-      if (ship.id != id) {
-        memo.push(ship);
-      }
-      return memo;
-    }, []);
-
-    if (this.attr.current && this.attr.current.id == id) {
-      this.attr.current = undefined;
-    }
+    this.reset = function(e, data) {
+      this.mergeState({
+        ships: this.attr.ships.reduce(function(memo, ship) {
+          if (ship.id != id) {
+            memo.push(ship);
+          }
+          return memo;
+        }, []),
+        current: this.attr.current && this.attr.current.id == id ? undefined : this.state.current
+      });
+    };
   };
 
   this.signalChange = function() {
-    this.trigger('changeShips', {
-      ships: this.attr.ships,
-      current: this.attr.current
-    });
+      this.trigger('changeShips', this.state);
   };
 
   ['reset', 'setCurrentShip', 'removeShip'].forEach(function(method) {
@@ -58,5 +66,6 @@ function ShipStore() {
 
 module.exports = flight.component(
   withShipCalculator,
+  withObservableState,
   ShipStore
 );

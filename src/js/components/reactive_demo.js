@@ -22,8 +22,8 @@ function toggleButton() {
   };
 
   this.update = function(state) {
-    console.log(this.state);
-    this.node.classList.toggle('is-active', this.state.active);
+    // console.log(this.state);
+    // this.node.classList.toggle('is-active', this.state.active);
   };
 
   this.after('initialize', function() {
@@ -32,11 +32,10 @@ function toggleButton() {
 
     this.on(document, 'changeShips', function(e, data) {
       console.log(data);
-      console.log(this.state);
     });
 
     // Subscribe to a stream of the changing state
-    this.observableState.subscribe(this.update.bind(this));
+    // this.observableState.subscribe(this.update.bind(this));
 
     // Transition the state using `replaceState`
     // this.replaceState({

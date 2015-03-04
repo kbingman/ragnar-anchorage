@@ -35,17 +35,15 @@ function ShipStore() {
   };
 
   this.removeShip = function(e, id) {
-    this.reset = function(e, data) {
       this.mergeState({
-        ships: this.attr.ships.reduce(function(memo, ship) {
+        ships: this.state.ships.reduce(function(memo, ship) {
           if (ship.id != id) {
             memo.push(ship);
           }
           return memo;
         }, []),
-        current: this.attr.current && this.attr.current.id == id ? undefined : this.state.current
+        current: this.state.current && this.state.current.id == id ? null : this.state.current
       });
-    };
   };
 
   this.signalChange = function() {
@@ -60,6 +58,8 @@ function ShipStore() {
     this.on(document, 'resetShips', this.reset);
     this.on(document, 'setCurrentShip', this.setCurrentShip);
     this.on(document, 'removeShip', this.removeShip);
+
+    // this.observableState.subscribe(this.update.bind(this));
   });
 
 }

@@ -1,7 +1,5 @@
 var flight = require('flightjs');
-
-var withBatch = require('flight-with-batch');
-var withXHR = require('../mixin/with_xhr');
+var withXHR = require('./mixin/with_xhr');
 
 function dispatcher() {
   this.attributes({
@@ -14,7 +12,8 @@ function dispatcher() {
 
   this.fetch = function() {
     this.request({ url: '/api/v1/ships' })
-      .then(this.resetStore.bind(this));
+      .then(this.resetStore.bind(this))
+      .catch(function(err) { console.log(err); });
   };
 
   this.after('initialize', function() {
@@ -23,7 +22,6 @@ function dispatcher() {
 }
 
 module.exports = flight.component(
-  withBatch,
   withXHR,
   dispatcher
 );

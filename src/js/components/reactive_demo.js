@@ -22,20 +22,19 @@ function toggleButton() {
   };
 
   this.update = function(state) {
-    // console.log(this.state);
-    // this.node.classList.toggle('is-active', this.state.active);
+    this.node.classList.toggle('is-active', this.state.active);
   };
 
   this.after('initialize', function() {
     this.on('click', this.toggle);
     this.after('toggle', this.batchify('update'));
 
-    this.on(document, 'changeShips', function(e, data) {
-      console.log(data);
-    });
+    // this.on(document, 'changeShips', function(e, data) {
+    //   console.log(data);
+    // });
 
     // Subscribe to a stream of the changing state
-    // this.observableState.subscribe(this.update.bind(this));
+    this.observableState.subscribe(this.update.bind(this));
 
     // Transition the state using `replaceState`
     // this.replaceState({

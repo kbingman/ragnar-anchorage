@@ -1,11 +1,9 @@
 window.$ = require('jquery');
 
-var reactiveDemo = require('./components/reactive_demo');
-var dispatcher = require('./components/dispatcher');
+var dispatcher = require('./dispatcher');
 var shipStore = require('./store/ship_store');
+var shipUI = require('./components/ship_ui');
 
-window.shipStore = shipStore;
-
-reactiveDemo.attachTo('[data-button]');
+shipUI.attachTo('[data-ship]');
 shipStore.attachTo(document);
 dispatcher.attachTo(document);

@@ -1,6 +1,6 @@
 var withUtils = require('../../../src/js/mixin/with_utils');
 
-describe('mixin', function(){
+describe('Mixin', function(){
   describe('mixin/with_utils', function(){
 
     beforeEach(function() {

@@ -4,52 +4,63 @@ var withObservableState = require('flight-with-observable-state');
 var withBatch = require('flight-with-batch');
 
 /**
- * State Object for current ships
+ * State Object for current ships using withState and RX extensions for observation
  */
-function ShipStore() {
+function ShipStore(state) {
+  // stub: required for state stuff
+  this.initialize = function(state) {
+    state = state || {
+      ships: [],
+      current: null
+    };
+    this.initialState(state);
+  }
 
-  this.initialState({
-    ships: [],
-    current: null
-  });
+  flight.compose.mixin(this, [
+    flight.advice.withAdvice,
+    withObservableState,
+    withShipCalculator
+  ]);
 
-  this.reset = function(e, data) {
+  this.reset = function(data) {
     this.mergeState({
-      ships: data.starships.map(function(ship) {
+      ships: data.map(function(ship) {
         return this.calculate(ship);;
       }, this)
     });
   };
 
-  this.add = function(e, data) {
-    this.state.ships.push(this.calculate(data.ship));
+  this.add = function(data) {
+    this.state.ships.push(this.calculate(data));
     this.mergeState({
       ships: this.state.ships
     });
   };
 
-  this.setCurrentShip = function(e, id) {
+  this.find = function(uuid) {
+    console.log('store find', +new Date());
     this.mergeState({
       current: this.state.ships.filter(function(ship) {
-        return ship.id == id;
+        return ship.uuid == uuid;
       })[0]
     });
   };
 
-  this.removeShip = function(e, id) {
+  this.remove = function(uuid) {
     this.mergeState({
       ships: this.state.ships.reduce(function(memo, ship) {
-        if (ship.id != id) {
+        if (ship.uuid != uuid) {
           memo.push(ship);
         }
         return memo;
       }, []),
-      current: this.state.current && this.state.current.id == id ? null : this.state.current
+      current: this.state.current && this.state.current.uuid == uuid ? null : this.state.current
     });
   };
 
-  this.updateShip = function(e, attributes) {
-    if (!this.current) {
+  this.update = function(attributes) {
+    console.log('store update', +new Date());
+    if (!this.state.current) {
       return;
     }
     Object.keys(attributes).forEach(function(key) {
@@ -61,25 +72,7 @@ function ShipStore() {
     });
   };
 
-  this.change = function() {
-    if (this.state.ships.length || this.state.current) {
-      this.trigger('changeShips', this.state);
-    }
-  };
-
-  this.after('initialize', function() {
-    this.on(document, 'resetShips', this.reset);
-    this.on(document, 'setCurrentShip', this.setCurrentShip);
-    this.on(document, 'removeShip', this.removeShip);
-    this.on(document, 'updateShip', this.updateShip);
-
-    this.observableState.subscribe(this.change.bind(this));
-  });
-
+  this.initialize(state);
 }
 
-module.exports = flight.component(
-  withShipCalculator,
-  withObservableState,
-  ShipStore
-);
+module.exports = new ShipStore();

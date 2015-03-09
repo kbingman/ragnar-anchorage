@@ -1,6 +1,6 @@
 var shipStore = require('../../src/js/dispatcher');
 
-describe('dispatcher', function(){
+describe('Dispatcher', function(){
 
   beforeEach(function() {
 

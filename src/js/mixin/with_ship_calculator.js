@@ -7,7 +7,7 @@ function withShip() {
   flight.compose.mixin(this, [withUtils]);
 
   this.calculate = function(ship) {
-    ship.uuid = ship.uuid ||this.generateUUID;
+    ship.uuid = ship.uuid ||this.generateUUID();
     // ship.price = this.calculatePrice(ship);
     // ship.tonnage = this.calculateTonnage(ship);
 

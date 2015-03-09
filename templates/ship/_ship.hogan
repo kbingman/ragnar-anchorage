@@ -17,7 +17,7 @@
             id="shipmass"
             contenteditable="true"
             placeholder="mass">
-        {{ mass }}{{# round }}{{/ round }}
+        {{# round }}{{ mass }}{{/ round }}
       </h3>
       <h4>
         Remaining Tonnage:
@@ -31,7 +31,7 @@
         Agility: {{ agility }}
       </h4>
 
-      <p>Price: MCr {{ price }}{{# format }}{{/ format }}</p>
+      <p>Price: MCr {{# format }}{{ price }}{{/ format }}</p>
       <span class="r-error-message"></span>
     </div>
 

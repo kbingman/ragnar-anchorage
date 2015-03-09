@@ -114,6 +114,7 @@ func main() {
 
   // HTML Routes
   router.GET("/", renderCanvas)
+  router.GET("/ships/:id", renderCanvas)
 
   // JSON API routes
   router.GET("/api/v1/ships", getAllStarships)

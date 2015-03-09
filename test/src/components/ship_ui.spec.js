@@ -1,6 +1,6 @@
 var shipUI = require('../../../src/js/components/ship_ui');
 
-describe('component', function(){
+describe('Component', function(){
   describe('components/ship_ui', function(){
 
     beforeEach(function() {

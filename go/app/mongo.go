@@ -1,9 +1,8 @@
-package utils
+package app
 
 import (
   "log"
   "labix.org/v2/mgo"
-  "github.com/julienschmidt/httprouter"
 )
 
 var (
@@ -27,17 +26,4 @@ func CreateMongoSession()  *mgo.Session {
 
   session.SetMode(mgo.Monotonic, true)
   return session
-}
-
-type App struct {
-  Session *mgo.Session
-  Router *httprouter.Router
-}
-
-func CreateApp() App {
-  app := App{
-    Session: CreateMongoSession(),
-    Router: Router(),
-  }
-  return app
 }

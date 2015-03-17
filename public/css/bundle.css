@@ -11,4 +11,7 @@ h1 {
   font-weight: 300; }
 
 canvas {
-  background: black; }
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0; }

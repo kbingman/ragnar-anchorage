@@ -1,6 +1,7 @@
 'use strict';
 
 function withCanvas() {
+
   this.setupCanvas = function() {
     this.attr.width = document.documentElement.clientWidth;
     this.attr.height = document.documentElement.clientHeight;
@@ -9,9 +10,10 @@ function withCanvas() {
 
     this.node.width = this.attr.width;
     this.node.height = this.attr.height;
-  }
+  };
+
   this.after('initialize', function() {
-    this.setupCanvas();
+    // this.setupCanvas();
   });
 }
 

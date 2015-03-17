@@ -1,3 +1,6 @@
 <h1>Hello World!</h1>
 <button data-button>Button</button>
 <div data-ship></div>
+<div >
+  <canvas data-tactical></canvas>
+</div>

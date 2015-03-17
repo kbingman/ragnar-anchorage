@@ -2,6 +2,7 @@ var flight = require('flightjs');
 var withXHR = require('../mixin/with_xhr');
 
 function shipActions() {
+
   this.attributes({
     shipStore: null
   });
@@ -20,10 +21,10 @@ function shipActions() {
 
   this.router = function() {
     var path = document.location.pathname;
-    var id = path.match(/^\/ships\/(\w+)/)[1];
+    var id = path.match(/^\/ships\/(\w+)/);
 
-    if (id) {
-      this.attr.shipStore.find(id);
+    if (id && id [1]) {
+      this.attr.shipStore.find(id[1]);
     }
   }
 

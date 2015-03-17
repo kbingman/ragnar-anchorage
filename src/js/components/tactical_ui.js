@@ -1,9 +1,9 @@
 var flight = require('flightjs');
 var withObservableState = require('flight-with-observable-state');
 var withBatch = require('flight-with-batch');
-var shipStore = require('../store/ship_store');
+var withCanvas = require('../mixin/with_canvas');
 
-function toggleButton() {
+function tacticalUI() {
   this.attributes({
     initiallyActive: false
   });
@@ -28,6 +28,7 @@ function toggleButton() {
   this.after('initialize', function() {
     this.on('click', this.toggle);
     this.after('toggle', this.batchify('update'));
+    // this.on(document, 'showTacticalUI', this.setupCanvas);
 
     // this.on(document, 'changeShips', function(e, data) {
     //   console.log(data);
@@ -40,6 +41,7 @@ function toggleButton() {
     // this.replaceState({
     //     active: this.attr.initiallyActive
     // });
+
     this.batch(this.update.bind(this));
   });
 }
@@ -47,5 +49,6 @@ function toggleButton() {
 module.exports = flight.component(
   withObservableState,
   withBatch,
-  toggleButton
+  withCanvas,
+  tacticalUI
 );

@@ -4,7 +4,6 @@ var withHogan = require('../mixin/with_hogan');
 var template = require('../../../templates/ship/_ship.hogan');
 
 function shipUI() {
-  var context;
 
   this.attributes({
 
@@ -32,8 +31,23 @@ function shipUI() {
     this.batch(this.render);
   };
 
+  this.up = function(e) {
+    console.log('up method');
+  }
+
+  this.defer = function(e) {
+    e.preventDefault();
+
+    var method = Object.keys(e.target.dataset)[0];
+
+    if(method && this[method]) {
+      this[method](e);
+    }
+  };
+
   this.after('initialize', function() {
     this.on(document, 'changeShip', this.update);
+    this.on('click', this.defer);
   });
 
 }

@@ -1,19 +1,13 @@
-package ships
+package api
 
 import (
   "log"
   "net/http"
   "encoding/json"
-  "labix.org/v2/mgo"
+  // "labix.org/v2/mgo"
   "labix.org/v2/mgo/bson"
   "github.com/julienschmidt/httprouter"
-  // "github.com/kbingman/full-of-stars/go/utils"
-)
-
-
-var (
-  session *mgo.Session
-  collection *mgo.Collection
+  "github.com/kbingman/full-of-stars/go/utils"
 )
 
 type Weapon struct {
@@ -72,18 +66,23 @@ type StarshipsJSON struct {
 
 func GetAllStarships(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 
-    // Let's build up the starships slice
-    var starships []Starship
+  // Let's build up the starships slice
+  var starships []Starship
 
-    iter := collection.Find(nil).Iter()
-    result := Starship{}
-    for iter.Next(&result) {
-        starships = append(starships, result)
-    }
+  log.Println("collection")
 
-    res.Header().Set("Content-Type", "application/json")
-    json, err := json.Marshal(StarshipsJSON{Starships: starships})
-    if err != nil { panic (err) }
-    res.Write(json)
-    log.Println("Provided json")
+  collection := utils.ReturnStarshipsCollection()
+  // collection := starshipsdb.C("starships")
+  iter := collection.Find(nil).Iter()
+  result := Starship{}
+  for iter.Next(&result) {
+      starships = append(starships, result)
+  }
+
+  res.Header().Set("Content-Type", "application/json")
+  json, err := json.Marshal(StarshipsJSON{Starships: starships})
+  if err != nil { panic (err) }
+  res.Write(json)
+  log.Println("Provided json")
+
 }

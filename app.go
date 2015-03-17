@@ -1,22 +1,11 @@
 package main
 
 import (
-  "net/http"
-  "fmt"
-  "log"
-  "path"
   "os"
-  "encoding/json"
+  // "labix.org/v2/mgo"
   "github.com/codegangsta/negroni"
-  "github.com/julienschmidt/httprouter"
-  "github.com/hoisie/mustache"
-  "labix.org/v2/mgo"
-  "labix.org/v2/mgo/bson"
-)
-
-var (
-  session *mgo.Session
-  collection *mgo.Collection
+  // "github.com/julienschmidt/httprouter"
+  "github.com/kbingman/ragnar-anchorage/go/utils"
 )
 
 type Weapon struct {
@@ -73,61 +62,39 @@ type StarshipsJSON struct {
   Starships []Starship `json:"starships"`
 }
 
-func getAllStarships(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+func GetAllStarships(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 
-    // Let's build up the starships slice
-    var starships []Starship
+  // Let's build up the starships slice
+  var starships []Starship
 
-    iter := collection.Find(nil).Iter()
-    result := Starship{}
-    for iter.Next(&result) {
-        starships = append(starships, result)
-    }
+  log.Println("collection")
 
-    res.Header().Set("Content-Type", "application/json")
-    json, err := json.Marshal(StarshipsJSON{Starships: starships})
-    if err != nil { panic (err) }
-    res.Write(json)
-    log.Println("Provided json")
-
-}
-
-func renderHTML(template string, context map[string]interface{}) string {
-  layoutPath := "templates/layout.hogan"
-  filename := path.Join(path.Join(os.Getenv("PWD"), "templates"), template + ".hogan")
-  return mustache.RenderFileInLayout(filename, layoutPath, context)
-}
-
-func renderCanvas(w http.ResponseWriter, req *http.Request, params httprouter.Params) {
-  context := map[string]interface{}{
-    "title": "Sector Map",
+  collection := utils.ReturnStarshipsCollection()
+  // collection := starshipsdb.C("starships")
+  iter := collection.Find(nil).Iter()
+  result := Starship{}
+  for iter.Next(&result) {
+      starships = append(starships, result)
   }
 
-  w.Header().Set("Content-Type", "text/html")
-  fmt.Fprint(w, renderHTML("canvas", context))
+  res.Header().Set("Content-Type", "application/json")
+  json, err := json.Marshal(StarshipsJSON{Starships: starships})
+  if err != nil { panic (err) }
+  res.Write(json)
+  log.Println("Provided json")
+
 }
 
+
 func main() {
+  app := utils.CreateApp()
   port := os.Getenv("PORT")
-  router := httprouter.New()
+  // router := utils.Router()
   // session := utils.CreateMongoSession()
 
-  // HTML Routes
-  router.GET("/", renderCanvas)
-  router.GET("/ships/:id", renderCanvas)
-
-  // JSON API routes
-  router.GET("/api/v1/ships", getAllStarships)
-
-  // log.Println("Starting mongo db session")
-  var err error
-  session, err = mgo.Dial("localhost")
-  if err != nil { panic (err) }
-  defer session.Close()
-  session.SetMode(mgo.Monotonic, true)
-  collection = session.DB("Starships").C("starships")
+  // defer app.Session.Close()
 
   n := negroni.Classic()
-  n.UseHandler(router)
+  n.UseHandler(app.Router)
   n.Run(":" + port)
 }

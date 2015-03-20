@@ -25,10 +25,26 @@ function tacticalUI() {
     this.node.classList.toggle('is-active', this.state.active);
   };
 
+  this.renderShips = function(x, y) {
+    for (var i = 0; i < 5; i++) {
+      this.drawCircle({
+        x: x,
+        y: y,
+        radius: Math.pow(2, i),
+        stroke: 2,
+        color: 'hsl(120, 76%, ' + (60 - i * 10) + '%)' });
+    }
+  };
+
   this.after('initialize', function() {
     this.on('click', this.toggle);
     this.after('toggle', this.batchify('update'));
-    // this.on(document, 'showTacticalUI', this.setupCanvas);
+    this.on(document, 'showTacticalUI', this.setupCanvas);
+    this.on(document, 'showTacticalUI', function() {
+      this.node.classList.remove('isHidden');
+      this.renderShips(300, 300);
+      this.renderShips(400, 250);
+    });
 
     // this.on(document, 'changeShips', function(e, data) {
     //   console.log(data);

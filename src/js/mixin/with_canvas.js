@@ -10,11 +10,43 @@ function withCanvas() {
 
     this.node.width = this.attr.width;
     this.node.height = this.attr.height;
+    this.attr.context = this.node.getContext('2d');
   };
 
-  this.after('initialize', function() {
-    // this.setupCanvas();
-  });
+  this.drawCircle = function(options) {
+    options = options || {};
+    var context = this.attr.context;
+    var eccentricity = options.eccentricity || 0;
+
+    context.save();
+    context.translate(options.x + 0.5, options.y + 0.5);
+    context.scale(1, 1 - options.eccentricity);
+
+    context.beginPath();
+    context.arc(0, 0, options.radius, 0, Math.PI * 2, true);
+    context.closePath();
+    context.fillStyle = options.fill || 'transparent';
+    context.lineWidth = options.stroke || 1;
+    context.strokeStyle = options.color || 'white';
+
+    context.stroke();
+    context.restore();
+  }
+
+  this.drawLine = function(options) {
+    var context = this.attr.context;
+    options = options || {};
+
+    context.translate(0.5, 0.5);
+    context.beginPath();
+    context.moveTo(options.x1, options.y1);
+    context.lineTo(options.x2, options.y2);
+    context.lineWidth = options.stroke || 1;
+    context.strokeStyle = options.color || 'white';
+    context.stroke();
+    context.restore();
+  };
+
 }
 
 module.exports = withCanvas;

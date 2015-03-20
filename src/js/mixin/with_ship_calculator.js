@@ -8,6 +8,7 @@ function withShip() {
 
   this.calculate = function(ship) {
     ship.uuid = ship.uuid ||this.generateUUID();
+    ship.usc = ship.usc || this.generateUniversalShipCode(ship);
     // ship.price = this.calculatePrice(ship);
     // ship.tonnage = this.calculateTonnage(ship);
 
@@ -21,6 +22,13 @@ function withShip() {
   this.calculatePrice = function(ship) {
     return 0;
   };
+
+  this.generateUniversalShipCode = function(ship) {
+    return ship.configuration + 
+      ship.ftl.toString() +
+      ship.thrust.toString() +
+      parseInt(ship.reactor, 16).toString();
+  }
 
 }
 

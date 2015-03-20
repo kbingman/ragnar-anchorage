@@ -14,9 +14,10 @@ func Router() *httprouter.Router {
 
   // JSON API routes
   router.GET("/api/v1/ships", GetAllStarships)
-  // router.POST("/api/ships", createStarship)
-  // router.DELETE("/api/ships/:id", deleteStarship)
-  // router.PUT("/api/ships/:id", updateStarship)
+  router.GET("/api/v1/ships/:id", GetStarship)
+  // router.POST("/api/v1/ships", createStarship)
+  // router.PUT("/api/v1/ships/:id", updateStarship)
+  // router.DELETE("/api/v1/ships/:id", deleteStarship)
 
   return router
 }

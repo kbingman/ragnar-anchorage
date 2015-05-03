@@ -1,6 +1,6 @@
 var shipUI = require('ship/ui');
 
-describe('Component', function(){
+describe('Ship', function(){
   describe('ship/ui', function(){
 
     beforeEach(function() {

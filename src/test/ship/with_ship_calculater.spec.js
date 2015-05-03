@@ -1,7 +1,7 @@
 var withShipCalculator = require('ship/with_ship_calculator');
 
-describe('Mixin', function(){
-  describe('mixin/with_ship_calculator', function(){
+describe('Ship', function(){
+  describe('with_ship_calculator', function(){
 
     beforeEach(function() {
 

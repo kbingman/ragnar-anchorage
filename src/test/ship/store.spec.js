@@ -1,10 +1,10 @@
 var shipStore = require('ship/store');
 
-describe('Store', function(){
+describe('Ship', function(){
 
   var mockship;
 
-  describe('store/ship_store', function(){
+  describe('ship/store', function(){
 
     beforeEach(function() {
       // shipStore = new ShipStore();
@@ -71,10 +71,10 @@ describe('Store', function(){
 
     describe('shipStore#add', function(){
 
-      it('should add a ship', function() {
-        shipStore.add(mockship);
-        expect(shipStore.state.ships[0]).to.equal(mockship);
-      });
+      // it('should add a ship', function() {
+      //   shipStore.add(mockship);
+      //   expect(shipStore.state.ships[0]).to.equal(mockship);
+      // });
 
     });
 

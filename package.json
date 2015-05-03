@@ -6,7 +6,7 @@
   "scripts": {
     "start": "PORT=3001 MONGO_URL=localhost ENV=development go run app.go",
     "livereload": "livereload ./public",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "karma start --single-run --reporter spec",
     "build:css": "sassc src/css/app.scss > public/css/bundle.css",
     "build:js": "browserify -t hoganify src/js/app.js > public/js/bundle.js",
     "build": "npm run build:css && npm run build:js",

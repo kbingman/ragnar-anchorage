@@ -1,5 +1,5 @@
 var flight = require('flightjs');
-var withXHR = require('../mixin/with_xhr');
+var withXHR = require('with-xhr');
 
 function tacticalActions() {
 

@@ -1,7 +1,7 @@
 var flight = require('flightjs');
 var withObservableState = require('flight-with-observable-state');
 var withBatch = require('flight-with-batch');
-var withCanvas = require('../mixin/with_canvas');
+var withCanvas = require('with-canvas');
 
 function tacticalUI() {
   this.attributes({

@@ -64,7 +64,7 @@ module.exports = function(config) {
 
     browserify: {
       files: ['test/src/**/*.spec.js'],
-      // debug: true,
+      debug: true,
       watch: true,
       transform: ['hoganify']
     },

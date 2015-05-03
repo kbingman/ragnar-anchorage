@@ -1,9 +1,11 @@
 window.$ = require('jquery');
 
 var dispatcher = require('./dispatcher');
-var shipStore = require('./store/ship_store');
-var shipUI = require('./components/ship_ui');
-var shipActions = require('./actions/ship_actions');
+
+var ship = require('ship');
+var shipUI = ship.ui;
+var shipActions = ship.actions;
+var shipStore = ship.store;
 
 var tacticalActions = require('./actions/tactical_actions');
 var tacticalUI = require('./components/tactical_ui');
@@ -24,7 +26,5 @@ shipActions.attachTo(document, {
 tacticalActions.attachTo(document, {
   // shipStore: shipStore
 });
-
-
 
 window.shipStore = shipStore;

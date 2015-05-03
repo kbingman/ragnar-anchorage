@@ -19,17 +19,23 @@ function withCanvas() {
     var eccentricity = options.eccentricity || 0;
 
     context.save();
-    context.translate(options.x + 0.5, options.y + 0.5);
+    context.translate(options.x, options.y);
     context.scale(1, 1 - options.eccentricity);
 
     context.beginPath();
     context.arc(0, 0, options.radius, 0, Math.PI * 2, true);
     context.closePath();
     context.fillStyle = options.fill || 'transparent';
-    context.lineWidth = options.stroke || 1;
+    context.lineWidth = options.stroke || 0;
     context.strokeStyle = options.color || 'white';
 
-    context.stroke();
+    if (options.stroke) {
+      context.stroke();
+    }
+    if (options.fill) {
+      context.fill();
+    }
+
     context.restore();
   }
 

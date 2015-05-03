@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "PORT=3001 MONGO_URL=localhost ENV=development go run app.go",
+    "livereload": "livereload ./public",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:css && npm run build:js",
     "build:css": "sassc src/css/app.scss > public/css/bundle.css",
     "build:js": "browserify -t hoganify src/js/app.js > public/js/bundle.js",
-    "watch": "watchify -t hoganify src/js/app.js -o public/js/bundle.js --debug"
+    "build": "npm run build:css && npm run build:js",
+    "watch:css": "node-sass -w src/css/app.scss --output-style compressed -o public/css src/css/app.scss",
+    "watch:js": "watchify -t hoganify src/js/app.js -o public/js/bundle.js --debug",
+    "watch": "npm run watch:css & npm run watch:js & npm run start"
   },
   "author": "",
   "license": "MIT",
@@ -18,6 +21,7 @@
     "flightjs": "^1.5.0",
     "hogan.js": "^3.0.2",
     "hoganify": "^0.2.0",
+    "immutable": "^3.6.4",
     "jquery": "^2.1.3",
     "rx": "^2.4.1",
     "uglify": "^0.1.1",

@@ -11,6 +11,7 @@ module.exports = function withFormUtils() {
     };
 
     var utils = {
+      
       format: function() {
         return function(text){
           var render = renderer(this);
@@ -25,6 +26,7 @@ module.exports = function withFormUtils() {
           return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + fraction;
         };
       },
+
       round: function() {
         return function(text){
           var render = renderer(this);

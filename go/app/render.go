@@ -10,8 +10,8 @@ import (
 )
 
 func RenderHTML(template string, context map[string]interface{}) string {
-  layoutPath := "templates/layout.hogan"
-  filename := path.Join(path.Join(os.Getenv("PWD"), "templates"), template + ".hogan")
+  layoutPath := "src/templates/layout.hogan"
+  filename := path.Join(path.Join(os.Getenv("PWD"), "src/templates"), template + ".hogan")
   return mustache.RenderFileInLayout(filename, layoutPath, context)
 }
 

@@ -6,11 +6,11 @@
   "scripts": {
     "start": "PORT=3001 MONGO_URL=localhost ENV=development go run app.go",
     "livereload": "livereload ./public",
-    "test": "karma start --single-run --reporter spec",
-    "build:css": "sassc src/css/app.scss > public/css/bundle.css",
+    "test": "karma start --single-run --reporters dots",
+    "build:css": "node-sass src/css/app.scss --output-style compressed -o public/css",
     "build:js": "browserify -t hoganify src/js/app.js > public/js/bundle.js",
     "build": "npm run build:css && npm run build:js",
-    "watch:css": "node-sass -w src/css/app.scss --output-style compressed -o public/css src/css/app.scss",
+    "watch:css": "node-sass -w src/css/app.scss --output-style compressed -o public/css",
     "watch:js": "watchify -t hoganify src/js/app.js -o public/js/bundle.js --debug",
     "watch": "npm run watch:css & npm run watch:js & npm run start"
   },

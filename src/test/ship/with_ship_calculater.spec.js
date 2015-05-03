@@ -1,4 +1,4 @@
-var withShipCalculator = require('../../../src/js/mixin/with_ship_calculator');
+var withShipCalculator = require('ship/with_ship_calculator');
 
 describe('Mixin', function(){
   describe('mixin/with_ship_calculator', function(){

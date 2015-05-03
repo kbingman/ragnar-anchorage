@@ -1,8 +1,8 @@
-var shipStore = require('../../../src/js/store/ship_store');
-// var shipStore;
-var mockship;
+var shipStore = require('ship/store');
 
 describe('Store', function(){
+
+  var mockship;
 
   describe('store/ship_store', function(){
 

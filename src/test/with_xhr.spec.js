@@ -1,4 +1,4 @@
-var withShipXHR = require('../../../src/js/mixin/with_xhr');
+var withShipXHR = require('with-xhr');
 
 describe('Mixin', function(){
   describe('mixin/with_xhr', function(){

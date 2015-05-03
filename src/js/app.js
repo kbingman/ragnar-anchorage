@@ -2,13 +2,12 @@ window.$ = require('jquery');
 
 var dispatcher = require('./dispatcher');
 
-var ship = require('ship');
-var shipUI = ship.ui;
-var shipActions = ship.actions;
-var shipStore = ship.store;
+var shipUI = require('ship/ui');
+var shipActions = require('ship/actions');
+var shipStore = require('ship/store');
 
-var tacticalActions = require('./actions/tactical_actions');
-var tacticalUI = require('./components/tactical_ui');
+var tacticalActions = require('tactical/actions');
+var tacticalUI = require('tactical/ui');
 
 // var shipStore = new ShipStore({
 //   ships: [],

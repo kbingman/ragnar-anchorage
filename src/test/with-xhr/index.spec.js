@@ -1,4 +1,4 @@
-var withXHR = require('with-xhr');
+var WithXHR = require('with-xhr');
 
 describe('with-xhr', function(){
 
@@ -7,7 +7,9 @@ describe('with-xhr', function(){
   });
 
   it('should be defined', function() {
-    expect(withXHR).to.not.be.undefined;
+    var withXHR = new WithXHR();
+
+    expect(withXHR.request).to.not.be.undefined;
   });
 
 });

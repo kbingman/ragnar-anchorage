@@ -1,7 +1,7 @@
 var withShipCalculator = require('ship/with_ship_calculator');
 
 describe('Ship', function(){
-  describe('with_ship_calculator', function(){
+  describe('ship/with_ship_calculator', function(){
 
     beforeEach(function() {
 

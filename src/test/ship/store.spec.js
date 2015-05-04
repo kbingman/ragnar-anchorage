@@ -1,4 +1,5 @@
 var shipStore = require('ship/store');
+// shipStore = new ShipStore();
 
 describe('Ship', function(){
 
@@ -7,74 +8,72 @@ describe('Ship', function(){
   describe('ship/store', function(){
 
     beforeEach(function() {
-      // shipStore = new ShipStore();
       mockship = {
         name: 'Funny, It Worked Last Time...'
       }
+      shipStore.reset([mockship]);
     });
 
     describe('shipStore#update', function(){
 
-      it('should update the current ship', function() {
-        shipStore.add(mockship);
+      it('should update the current ship\'s price', function() {
         shipStore.find(mockship.uuid);
         shipStore.update({ price: 302 })
 
         expect(shipStore.state.current.price).to.be.equal(302);
       });
 
+      it('should update the current ship\'s name', function() {
+        shipStore.find(mockship.uuid);
+        shipStore.update({ name: 'Just Read the Instructions' })
+
+        expect(shipStore.state.current.name).to.be.equal('Just Read the Instructions');
+      });
+
     });
 
     describe('shipStore#remove', function(){
 
-      // it('should remove a ship', function() {
-      //   shipStore.add(mockship);
-      //   expect(shipStore.state.ships.length).to.equal(1);
-      //
-      //   shipStore.remove(mockship.uuid);
-      //   expect(shipStore.state.ships.length).to.equal(0);
-      // });
-      //
-      // it('should remove a ship if it is current', function() {
-      //   shipStore.add(mockship);
-      //   shipStore.find(mockship.uuid);
-      //   expect(shipStore.state.ships.length).to.equal(1);
-      //   expect(shipStore.state.current).to.equal(mockship);
-      //
-      //   shipStore.remove(mockship.uuid);
-      //   expect(shipStore.state.ships.length).to.equal(0);
-      //   expect(shipStore.state.current).to.be.null;
-      // });
+      it('should remove a ship', function() {
+        shipStore.remove(mockship.uuid);
+        expect(shipStore.state.ships.length).to.equal(0);
+      });
+
+      it('should remove a ship if it is current', function() {
+        shipStore.find(mockship.uuid);
+        expect(shipStore.state.ships.length).to.equal(1);
+        expect(shipStore.state.current).to.equal(mockship);
+
+        shipStore.remove(mockship.uuid);
+        expect(shipStore.state.ships.length).to.equal(0);
+        expect(shipStore.state.current).to.be.null;
+      });
 
     });
 
     describe('shipStore#find', function(){
 
-      // it('should find the existing ship and set it to current', function() {
-      //   mockship.uuid = 'ab123e';
-      //   shipStore.add(mockship);
-      //
-      //   shipStore.find('ab123e');
-      //   expect(shipStore.state.current).to.equal(mockship);
-      // });
-      //
-      // it('should return null if no match is found', function() {
-      //   mockship.uuid = 'ab123e';
-      //   shipStore.add(mockship);
-      //
-      //   shipStore.find('ff123f');
-      //   console.log(shipStore.state.current)
-      //   expect(shipStore.state.current).to.be.null;
-      // });
+      it('should find the existing ship and set it to current', function() {
+        mockship.uuid = 'ab123e';
+        shipStore.add(mockship);
+
+        shipStore.find('ab123e');
+        expect(shipStore.state.current).to.equal(mockship);
+      });
+
+      it('should return null if no match is found', function() {
+        shipStore.find('ffffff');
+        expect(shipStore.state.current).to.be.null;
+      });
 
     });
 
     describe('shipStore#add', function(){
 
-      // it('should add a ship', function() {
-      //   shipStore.add(mockship);
-      //   expect(shipStore.state.ships[0]).to.equal(mockship);
-      // });
+      it('should add a ship', function() {
+        shipStore.add(mockship);
+        expect(shipStore.state.ships[0]).to.equal(mockship);
+      });
 
     });
 

@@ -1,4 +1,4 @@
-var withHogan = require('with-hogan');
+var WithHogan = require('with-hogan');
 
 describe('with-hogan', function(){
 
@@ -7,7 +7,8 @@ describe('with-hogan', function(){
   });
 
   it('should be defined', function() {
-    expect(withHogan).to.not.be.undefined;
+    var withHogan = new WithHogan();
+    expect(withHogan.renderTemplate).to.not.be.undefined;
   });
 
 });

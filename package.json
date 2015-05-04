@@ -8,7 +8,7 @@
     "livereload": "livereload ./public",
     "test": "karma start --single-run --reporters dots",
     "build:css": "node-sass src/css/app.scss --output-style compressed -o public/css",
-    "build:js": "browserify -t hoganify src/js/app.js > public/js/bundle.js",
+    "build:js": "browserify -t hoganify src/js/app.js | uglifyjs -c -m > public/js/bundle.min.js",
     "build": "npm run build:css && npm run build:js",
     "watch:css": "node-sass -w src/css/app.scss --output-style compressed -o public/css css/app.scss",
     "watch:js": "watchify -t hoganify src/js/app.js -o public/js/bundle.js --debug",

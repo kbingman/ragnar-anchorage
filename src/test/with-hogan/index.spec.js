@@ -8,7 +8,7 @@ describe('with-hogan', function(){
 
   it('should be defined', function() {
     var withHogan = new WithHogan();
-    expect(withHogan.renderTemplate).to.not.be.undefined;
+    expect(withHogan.renderTemplate).to.be.defined;
   });
 
 });

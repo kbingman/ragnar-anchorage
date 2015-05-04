@@ -1,5 +1,5 @@
-var shipStore = require('ship/store');
-// shipStore = new ShipStore();
+var ShipStore = require('ship/store');
+var shipStore = new ShipStore();
 
 describe('Ship', function(){
 
@@ -14,13 +14,13 @@ describe('Ship', function(){
       shipStore.reset([mockship]);
     });
 
-    describe('shipStore#update', function(){
+    describe('shipStore#ftl', function(){
 
-      it('should update the current ship\'s price', function() {
+      it('should update the current ship\'s ftl', function() {
         shipStore.find(mockship.uuid);
-        shipStore.update({ price: 302 })
+        shipStore.update({ ftl: 6 })
 
-        expect(shipStore.state.current.price).to.be.equal(302);
+        expect(shipStore.state.current.ftl).to.be.equal(6);
       });
 
       it('should update the current ship\'s name', function() {

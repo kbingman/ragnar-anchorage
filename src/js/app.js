@@ -4,7 +4,8 @@ var dispatcher = require('./dispatcher');
 
 var shipUI = require('ship/ui');
 var shipActions = require('ship/actions');
-var shipStore = require('ship/store');
+var ShipStore = require('ship/store');
+var shipStore = new ShipStore();
 
 var tacticalActions = require('tactical/actions');
 var tacticalUI = require('tactical/ui');
@@ -13,15 +14,18 @@ var tacticalUI = require('tactical/ui');
 //   ships: [],
 //   current: null
 // });
+
 shipUI.attachTo('[data-ship]');
 tacticalUI.attachTo('[data-tactical]');
 
 dispatcher.attachTo(document, {
   shipStore: shipStore
 });
+
 shipActions.attachTo(document, {
   shipStore: shipStore
 });
+
 tacticalActions.attachTo(document, {
   // shipStore: shipStore
 });
